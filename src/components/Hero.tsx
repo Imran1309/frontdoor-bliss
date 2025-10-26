@@ -29,7 +29,9 @@ const Hero = () => {
         loop 
         muted 
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        controls={false}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ objectFit: 'cover' }}
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
