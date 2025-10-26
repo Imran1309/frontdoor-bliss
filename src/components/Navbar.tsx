@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/company-logo.png";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,18 +21,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <div className="flex items-center gap-3 animate-slide-in">
-            <img src={logo} alt="Tour Guide Logo" className="h-12 w-12" />
-            <div className="flex flex-col">
-              <span className="text-xl font-bold text-primary-foreground tracking-wider">
-                DHANA TOUR
-              </span>
-              <span className="text-xl font-bold text-accent tracking-wider">
-                CONSULTORS
-              </span>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest">
-                SINCE 2020
-              </span>
-            </div>
+            <img src={logo} alt="Dhana Tour Consultors Logo" className="h-16 w-auto" />
           </div>
 
           {/* Desktop Navigation */}

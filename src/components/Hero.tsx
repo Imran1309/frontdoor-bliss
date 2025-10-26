@@ -1,13 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, Star } from "lucide-react";
+import { useState, useEffect } from "react";
+import bgFalls from "@/assets/bg-falls.jpg";
+import bgResort from "@/assets/bg-resort.jpg";
+import bgCity from "@/assets/bg-city.jpg";
 import heroImage from "@/assets/hero-bg.jpg";
+import chakra from "@/assets/chakra.png";
 
 const Hero = () => {
+  const backgrounds = [heroImage, bgFalls, bgResort, bgCity];
+  const [currentBg, setCurrentBg] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % backgrounds.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-1000"
       style={{
-        backgroundImage: `url(${heroImage})`,
+        backgroundImage: `url(${backgrounds[currentBg]})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
@@ -32,9 +47,13 @@ const Hero = () => {
             Your dream came true with our team
           </p>
           
-          <div className="flex items-center justify-center gap-3 mb-8 text-primary-foreground animate-fade-in" style={{ animationDelay: "0.6s" }}>
+          <div className="flex flex-wrap items-center justify-center gap-2 mb-8 text-primary-foreground animate-fade-in" style={{ animationDelay: "0.6s" }}>
             <span className="text-3xl md:text-4xl font-bold text-secondary">32 States</span>
-            <span className="text-2xl md:text-3xl">unforgettable</span>
+            <span className="text-2xl md:text-3xl flex items-center gap-1">
+              unf
+              <img src={chakra} alt="Chakra" className="inline-block h-8 w-8 md:h-10 md:w-10 animate-spin" style={{ animationDuration: '8s' }} />
+              rgettable
+            </span>
             <span className="text-3xl md:text-4xl font-bold text-accent">memories</span>
           </div>
 

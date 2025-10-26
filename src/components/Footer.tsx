@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from "lucide-react";
-import logo from "@/assets/logo.png";
+import logo from "@/assets/company-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,15 +11,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="Tour Guide Logo" className="h-12 w-12" />
-              <div className="flex flex-col">
-                <span className="text-lg font-bold tracking-wider">
-                  DHANA TOUR
-                </span>
-                <span className="text-lg font-bold text-accent tracking-wider">
-                  CONSULTORS
-                </span>
-              </div>
+              <img src={logo} alt="Dhana Tour Consultors Logo" className="h-20 w-auto" />
             </div>
             <p className="text-primary-foreground/80 mb-4">
               Creating unforgettable travel experiences across India since 2020.
