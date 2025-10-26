@@ -6,6 +6,7 @@ import bgResort from "@/assets/bg-resort.jpg";
 import bgCity from "@/assets/bg-city.jpg";
 import heroImage from "@/assets/hero-bg.jpg";
 import chakra from "@/assets/chakra.png";
+import heroVideo from "@/assets/hero-video.mp4";
 
 const Hero = () => {
   const backgrounds = [heroImage, bgFalls, bgResort, bgCity];
@@ -20,15 +21,21 @@ const Hero = () => {
 
   return (
     <section 
-      className="relative min-h-screen flex items-center justify-center overflow-hidden transition-all duration-1000"
-      style={{
-        backgroundImage: `url(${backgrounds[currentBg]})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-hero"></div>
+      {/* Background Video */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
+      
+      {/* Subtle Overlay */}
+      <div className="absolute inset-0 bg-black/30"></div>
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
