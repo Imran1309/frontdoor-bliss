@@ -8,36 +8,26 @@ import falls2 from "@/assets/falls-2.jpg";
 import go2 from "@/assets/go-2.jpg";
 import promoB2 from "@/assets/promo_b-2.jpg";
 import chakra from "@/assets/chakra.png";
-import heroVideo from "@/assets/hero-video.mp4";
+import heroVideo from "@/assets/vedio-3.mp4";
 
 const Hero = () => {
-  const backgrounds = [falls2, go2, promoB2, bgFalls];
-  const [currentBg, setCurrentBg] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentBg((prev) => (prev + 1) % backgrounds.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Images Slideshow */}
-      {backgrounds.map((bg, index) => (
-        <div
-          key={index}
-          className="absolute inset-0 w-full h-full transition-opacity duration-1000"
-          style={{
-            opacity: currentBg === index ? 1 : 0,
-            backgroundImage: `url(${bg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
-      ))}
+      {/* Background Video */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        controls={false}
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        style={{ objectFit: 'cover' }}
+      >
+        <source src={heroVideo} type="video/mp4" />
+      </video>
       
       {/* Subtle Overlay */}
       <div className="absolute inset-0 bg-black/30"></div>
