@@ -47,6 +47,10 @@ All colors MUST be HSL.
     --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.1);
     
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    
+    /* Logo colors */
+    --logo-company: 0 100% 50%;
+    --logo-tagline: 270 100% 50%;
   }
 
   .dark {
