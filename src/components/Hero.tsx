@@ -8,7 +8,7 @@ import falls2 from "@/assets/falls-2.jpg";
 import go2 from "@/assets/go-2.jpg";
 import promoB2 from "@/assets/promo_b-2.jpg";
 import chakra from "@/assets/chakra.png";
-import heroVideo from "@/assets/vedio-3.mp4";
+import heroVideo from "@/assets/pr.mp4";
 
 const Hero = () => {
 
