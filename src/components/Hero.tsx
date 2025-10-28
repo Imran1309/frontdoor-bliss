@@ -7,23 +7,47 @@ import bgCity from "@/assets/bg-city.jpg";
 import falls2 from "@/assets/falls-2.jpg";
 import go2 from "@/assets/go-2.jpg";
 import promoB2 from "@/assets/promo_b-2.jpg";
+import falls3 from "@/assets/falls-3.jpg";
+import go3 from "@/assets/go-3.jpg";
+import promoB3 from "@/assets/promo_b-3.jpg";
 import chakra from "@/assets/chakra.png";
 import heroVideo from "@/assets/pr.mp4";
 
 const Hero = () => {
+  const backgrounds = [falls3, go3, promoB3];
+  const [currentBg, setCurrentBg] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBg((prev) => (prev + 1) % backgrounds.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Video */}
+      {/* Background Images Slideshow */}
+      {backgrounds.map((bg, index) => (
+        <div
+          key={index}
+          className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
+          style={{
+            backgroundImage: `url(${bg})`,
+            opacity: currentBg === index ? 1 : 0,
+          }}
+        />
+      ))}
+      
+      {/* Background Video Overlay */}
       <video 
         autoPlay 
         loop 
         muted 
         playsInline
         controls={false}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-40"
         style={{ objectFit: 'cover' }}
       >
         <source src={heroVideo} type="video/mp4" />
