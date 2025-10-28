@@ -14,44 +14,51 @@ import chakra from "@/assets/chakra.png";
 import heroVideo from "@/assets/pr.mp4";
 
 const Hero = () => {
-  const backgrounds = [falls3, go3, promoB3];
+  const backgrounds = [
+    { type: 'video', src: heroVideo },
+    { type: 'image', src: falls3 },
+    { type: 'image', src: go3 },
+    { type: 'image', src: promoB3 }
+  ];
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % backgrounds.length);
-    }, 5000);
+    }, currentBg === 0 ? 1000 : 5000); // Video shows for 1 second, images for 5 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [currentBg]);
 
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Images Slideshow */}
+      {/* Background Slideshow */}
       {backgrounds.map((bg, index) => (
         <div
           key={index}
-          className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-1000"
-          style={{
-            backgroundImage: `url(${bg})`,
-            opacity: currentBg === index ? 1 : 0,
-          }}
-        />
+          className="absolute inset-0 w-full h-full transition-opacity duration-1000"
+          style={{ opacity: currentBg === index ? 1 : 0 }}
+        >
+          {bg.type === 'video' ? (
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              controls={false}
+              className="w-full h-full object-cover"
+            >
+              <source src={bg.src} type="video/mp4" />
+            </video>
+          ) : (
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${bg.src})` }}
+            />
+          )}
+        </div>
       ))}
-      
-      {/* Background Video Overlay */}
-      <video 
-        autoPlay 
-        loop 
-        muted 
-        playsInline
-        controls={false}
-        className="absolute inset-0 w-full h-full object-cover pointer-events-none opacity-40"
-        style={{ objectFit: 'cover' }}
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
       
       {/* Subtle Overlay */}
       <div className="absolute inset-0 bg-black/30"></div>
