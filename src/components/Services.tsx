@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
+  const navigate = useNavigate();
+  
   const packages = [
     {
       image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&q=80",
@@ -55,6 +58,7 @@ const Services = () => {
               {/* Button */}
               <Button 
                 size="lg"
+                onClick={() => navigate(`/booking?package=${encodeURIComponent(pkg.title)}`)}
                 className="w-80 bg-[#7d1f5e] hover:bg-[#6a1a4f] text-white rounded-full shadow-lg text-xl py-6 font-serif italic"
               >
                 {pkg.title}
