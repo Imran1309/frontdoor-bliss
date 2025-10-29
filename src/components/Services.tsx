@@ -1,71 +1,65 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Compass, Mountain, Plane, Camera, Hotel, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Services = () => {
-  const services = [
+  const packages = [
     {
-      icon: Compass,
-      title: "Guided Tours",
-      description: "Expert local guides to show you the hidden gems and authentic experiences.",
+      image: "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=400&q=80",
+      title: "Honey Moon",
     },
     {
-      icon: Mountain,
-      title: "Adventure Trips",
-      description: "Thrilling adventures from trekking to water sports across stunning landscapes.",
+      image: "https://images.unsplash.com/photo-1581091870623-4e1e3b9e7ab3?w=400&q=80",
+      title: "Educational Trip",
     },
     {
-      icon: Plane,
-      title: "Custom Packages",
-      description: "Tailored itineraries designed to match your preferences and budget.",
+      image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=400&q=80",
+      title: "Devotional Trip",
     },
     {
-      icon: Camera,
-      title: "Photo Tours",
-      description: "Capture breathtaking moments with professional photography guidance.",
+      image: "https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80",
+      title: "Wedding Trip",
     },
     {
-      icon: Hotel,
-      title: "Accommodation",
-      description: "Handpicked hotels and resorts offering comfort and great value.",
+      image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&q=80",
+      title: "College IV",
     },
     {
-      icon: Users,
-      title: "Group Travel",
-      description: "Special packages for families, friends, and corporate team outings.",
+      image: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=400&q=80",
+      title: "All India trip",
     },
   ];
 
   return (
-    <section id="packages" className="py-20 bg-muted">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Our Services
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Comprehensive travel solutions designed to make your journey unforgettable
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <Card 
-              key={service.title} 
-              className="hover:shadow-lg transition-all hover:-translate-y-1 animate-fade-in"
+    <section id="packages" className="py-20 relative overflow-hidden">
+      {/* Gradient Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-orange-400 via-green-400 via-cyan-400 to-blue-400"></div>
+      
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 max-w-6xl mx-auto">
+          {packages.map((pkg, index) => (
+            <div 
+              key={pkg.title} 
+              className="flex flex-col items-center animate-fade-in"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <CardHeader>
-                <div className="w-16 h-16 rounded-full bg-gradient-warm flex items-center justify-center mb-4">
-                  <service.icon className="h-8 w-8 text-primary-foreground" />
+              {/* Circular Image */}
+              <div className="relative mb-6 group">
+                <div className="w-64 h-64 rounded-full overflow-hidden border-8 border-white shadow-2xl transition-transform hover:scale-105">
+                  <img 
+                    src={pkg.image} 
+                    alt={pkg.title}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <CardTitle className="text-2xl">{service.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  {service.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
+              </div>
+              
+              {/* Button */}
+              <Button 
+                size="lg"
+                className="w-80 bg-[#7d1f5e] hover:bg-[#6a1a4f] text-white rounded-full shadow-lg text-xl py-6 font-serif italic"
+              >
+                {pkg.title}
+              </Button>
+            </div>
           ))}
         </div>
       </div>
