@@ -1,42 +1,62 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, Calendar, Star } from "lucide-react";
 import { useState, useEffect } from "react";
-import bgFalls from "@/assets/bg-falls.jpg";
-import bgResort from "@/assets/bg-resort.jpg";
-import bgCity from "@/assets/bg-city.jpg";
-import falls2 from "@/assets/falls-2.jpg";
-import go2 from "@/assets/go-2.jpg";
-import promoB2 from "@/assets/promo_b-2.jpg";
+
+import falls3 from "@/assets/bg-city.jpg";
+import go3 from "@/assets/bg-falls.jpg";
+import promoB3 from "@/assets/pic.jpg";
 import chakra from "@/assets/chakra.png";
-import heroVideo from "@/assets/hero-video.mp4";
+import heroVideo from "@/assets/heroVideo.mp4";
 
 const Hero = () => {
-  const backgrounds = [falls2, go2, promoB2, bgFalls];
+  
+  const backgrounds = [
+    { type: 'video', src: heroVideo },
+    { type: 'image', src: falls3 },
+    { type: 'image', src: go3 },
+    { type: 'image', src: promoB3 }
+  ];
+  
+  const taglines = ["Feel the breeze of wind", "Light Cities","Green Dreams Begin", "Night Life" ];
+
   const [currentBg, setCurrentBg] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBg((prev) => (prev + 1) % backgrounds.length);
-    }, 4000);
+    }, currentBg === 0 ? 3000 : 5000); // Video shows for 1 second, images for 5 seconds
     return () => clearInterval(interval);
-  }, []);
+  }, [currentBg]);
 
   return (
     <section 
       className="relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Images Slideshow */}
+      {/* Background Slideshow */}
       {backgrounds.map((bg, index) => (
         <div
           key={index}
           className="absolute inset-0 w-full h-full transition-opacity duration-1000"
-          style={{
-            opacity: currentBg === index ? 1 : 0,
-            backgroundImage: `url(${bg})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        />
+          style={{ opacity: currentBg === index ? 1 : 0 }}
+        >
+          {bg.type === 'video' ? (
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              controls={false}
+              className="w-full h-full object-cover"
+            >
+              <source src={bg.src} type="video/mp4" />
+            </video>
+          ) : (
+            <div
+              className="w-full h-full bg-cover bg-center"
+              style={{ backgroundImage: `url(${bg.src})` }}
+            />
+          )}
+        </div>
       ))}
       
       {/* Subtle Overlay */}
@@ -45,10 +65,21 @@ const Hero = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 pt-20">
         <div className="text-center max-w-4xl mx-auto">
+            {/* Dynamic Tagline */}
           <div className="mb-6 animate-fade-in">
-            <span className="text-secondary text-2xl md:text-3xl font-serif italic">
-              Your Dream Begin
-            </span>
+            <span
+  key={taglines[currentBg]}
+  className="text-6xl md:text-6xl font-[Great_Vibes] italic underline decoration-yellow-400 transition-all duration-700"
+  style={{
+    color: "#FF1295",
+    textDecorationThickness: "3px",
+    textUnderlineOffset: "12px",
+    mixBlendMode: "difference",
+    fontFamily: "'Great Vibes', 'Fraktur', cursive", 
+  }}
+>
+  {taglines[currentBg]}
+</span>
           </div>
           
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground mb-6 animate-fade-in" style={{ animationDelay: "0.2s" }}>
@@ -66,7 +97,7 @@ const Hero = () => {
               <img src={chakra} alt="Chakra" className="inline-block h-8 w-8 md:h-10 md:w-10 animate-spin" style={{ animationDuration: '8s' }} />
               rgettable
             </span>
-            <span className="text-3xl md:text-4xl font-bold text-accent">memories</span>
+            <span className="text-3xl md:text-4xl font-bold text-green-700">memories</span>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: "0.8s" }}>

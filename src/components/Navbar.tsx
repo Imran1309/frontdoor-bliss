@@ -16,40 +16,58 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-md">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo */}
-          <div className="flex items-center gap-3 animate-slide-in">
-            <img src={logo} alt="Dhana Tour Consultors Logo" className="h-16 w-auto" />
-            <div className="flex flex-col">
-              <h1 className="font-allerta text-lg md:text-xl font-bold leading-tight" style={{ color: 'hsl(0 100% 50%)' }}>
-                Dhana Tours and Consultors
-              </h1>
-              <p className="font-allerta text-sm md:text-base" style={{ color: 'hsl(270 100% 50%)' }}>
-                Since 2020
-              </p>
-            </div>
-          </div>
+  <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent backdrop-blur-md">
+  <div className="w-full px-4 sm:px-6 lg:px-8">
+    <div className="flex items-center justify-between h-20">
+      
+      <div className="flex items-center gap-8 animate-slide-in">
+        <img src={logo} alt="Dhana Tour Consultors Logo" className="h-20 w-30" />
+        <div className="flex flex-col">
+         <h1
+  className="text-1xl md:text-5xl font-bold italic"
+  style={{
+    fontFamily: "'Great Vibes', cursive",
+    color: '#FF0000',
+    textShadow: '2px 2px 4px rgba(0,0,0,0.2)',
+  }}
+>
+  Dhana Tours and Consultors
+</h1>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navItems.map((item, index) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-primary-foreground hover:text-accent transition-colors font-medium animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {item.name}
-              </a>
-            ))}
+<p
+  className="text-sm md:text-1xl"
+  style={{
+    fontFamily: "'UnifrakturCook', cursive",
+    fontSize: "30px",
+    color: "hsla(283, 94%, 40%, 1)", // purple accent
+  }}
+>
+  Since 2020
+</p>
+
+          
+        </div>
+      </div>
+
+      
+      <div className="hidden md:flex items-center gap-10 ml-auto">
+        {navItems.map((item, index) => (
+          <a
+            key={item.name}
+            href={item.href}
+            className="text-primary-foreground hover:text-accent transition-colors font-medium animate-fade-in"
+            style={{ animationDelay: `${index * 0.1}s` }}
+          >
+            {item.name}
+          </a>
+        ))}
+       
             <Button variant="hero" size="lg" className="animate-fade-in">
               Book
             </Button>
           </div>
 
-          {/* Mobile menu button */}
+         
           <div className="md:hidden">
             <Button
               variant="ghost"
@@ -62,7 +80,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+       
         {mobileMenuOpen && (
           <div className="md:hidden py-4 animate-fade-in">
             {navItems.map((item) => (

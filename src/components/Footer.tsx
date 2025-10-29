@@ -11,7 +11,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="Dhana Tour Consultors Logo" className="h-20 w-auto" />
+              <img src={logo} alt="Dhana Tour Consultors Logo" className="h-50 w-30" />
             </div>
             <p className="text-primary-foreground/80 mb-4">
               Creating unforgettable travel experiences across India since 2020.
