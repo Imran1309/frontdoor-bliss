@@ -1,16 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logo from "@/assets/company-logo.png";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const navItems = [
     { name: "Home", href: "#" },
     { name: "Packages", href: "#packages" },
     { name: "States", href: "#states" },
-    { name: "Memories", href: "#memories" },
+    { name: "Memories", href: "/memories", isRoute: true },
     { name: "Reviews", href: "#reviews" },
     { name: "About us", href: "#about" },
   ];
@@ -35,16 +37,27 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item, index) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-primary-foreground hover:text-accent transition-colors font-medium animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {item.name}
-              </a>
+              item.isRoute ? (
+                <button
+                  key={item.name}
+                  onClick={() => navigate(item.href)}
+                  className="text-primary-foreground hover:text-accent transition-colors font-medium animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-primary-foreground hover:text-accent transition-colors font-medium animate-fade-in"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  {item.name}
+                </a>
+              )
             ))}
-            <Button variant="hero" size="lg" className="animate-fade-in">
+            <Button variant="hero" size="lg" className="animate-fade-in" onClick={() => navigate("/booking")}>
               Book
             </Button>
           </div>
@@ -66,16 +79,29 @@ const Navbar = () => {
         {mobileMenuOpen && (
           <div className="md:hidden py-4 animate-fade-in">
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="block py-3 text-primary-foreground hover:text-accent transition-colors font-medium"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </a>
+              item.isRoute ? (
+                <button
+                  key={item.name}
+                  onClick={() => {
+                    navigate(item.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="block py-3 text-primary-foreground hover:text-accent transition-colors font-medium w-full text-left"
+                >
+                  {item.name}
+                </button>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="block py-3 text-primary-foreground hover:text-accent transition-colors font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </a>
+              )
             ))}
-            <Button variant="hero" size="lg" className="w-full mt-4">
+            <Button variant="hero" size="lg" className="w-full mt-4" onClick={() => navigate("/booking")}>
               Book
             </Button>
           </div>
