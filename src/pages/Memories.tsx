@@ -1,14 +1,34 @@
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Plus } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { ArrowLeft, Plus, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState, useRef } from "react";
+import { useToast } from "@/hooks/use-toast";
 import karnatakaDiaries from "@/assets/go-2.jpg";
 import coorg from "@/assets/falls-2.jpg";
 import goldenTemple from "@/assets/go-3.jpg";
 
+interface Memory {
+  image: string;
+  title: string;
+  description: string;
+}
+
 const Memories = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [userMemories, setUserMemories] = useState<Memory[]>([]);
 
-  const memories = [
+  const defaultMemories = [
     {
       image: karnatakaDiaries,
       title: "Karnataka Diaries :",
@@ -26,6 +46,56 @@ const Memories = () => {
     },
   ];
 
+  const allMemories = [...userMemories, ...defaultMemories];
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.type.startsWith('image/') || file.type.startsWith('video/')) {
+        setSelectedFile(file);
+        const url = URL.createObjectURL(file);
+        setPreviewUrl(url);
+      } else {
+        toast({
+          title: "Invalid file type",
+          description: "Please select an image or video file",
+          variant: "destructive",
+        });
+      }
+    }
+  };
+
+  const handleUpload = () => {
+    if (!selectedFile || !newTitle.trim()) {
+      toast({
+        title: "Missing information",
+        description: "Please add a title and select a photo/video",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newMemory: Memory = {
+      image: previewUrl,
+      title: newTitle,
+      description: newDescription,
+    };
+
+    setUserMemories([newMemory, ...userMemories]);
+    
+    // Reset form
+    setUploadDialogOpen(false);
+    setNewTitle("");
+    setNewDescription("");
+    setSelectedFile(null);
+    setPreviewUrl("");
+    
+    toast({
+      title: "Memory added!",
+      description: "Your new memory has been added successfully",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-400 via-purple-300 via-green-300 to-cyan-400 relative">
       {/* Header */}
@@ -37,7 +107,10 @@ const Memories = () => {
           <ArrowLeft size={40} strokeWidth={3} />
         </button>
         <h1 className="text-5xl font-bold text-[#5a1a45] font-serif">Memories</h1>
-        <button className="text-gray-700 hover:text-gray-900 transition-colors">
+        <button 
+          onClick={() => setUploadDialogOpen(true)}
+          className="text-gray-700 hover:text-gray-900 transition-colors"
+        >
           <Plus size={40} strokeWidth={2.5} className="border-2 border-gray-700 rounded-full" />
         </button>
       </div>
@@ -45,7 +118,7 @@ const Memories = () => {
       {/* Memory Cards */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {memories.map((memory, index) => (
+          {allMemories.map((memory, index) => (
             <div
               key={index}
               className="bg-gradient-to-b from-purple-900 to-purple-950 rounded-3xl p-6 shadow-2xl border-4 border-purple-800 flex flex-col"
@@ -84,6 +157,67 @@ const Memories = () => {
           ))}
         </div>
       </div>
+
+      {/* Upload Dialog */}
+      <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add New Memory</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Input
+                id="title"
+                placeholder="Enter memory title"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="description">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Share your experience..."
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
+                rows={4}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label>Photo or Video</Label>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*,video/*"
+                onChange={handleFileSelect}
+                className="hidden"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <Upload className="mr-2 h-4 w-4" />
+                {selectedFile ? selectedFile.name : "Choose file"}
+              </Button>
+              {previewUrl && (
+                <div className="mt-2 rounded-lg overflow-hidden">
+                  {selectedFile?.type.startsWith('image/') ? (
+                    <img src={previewUrl} alt="Preview" className="w-full h-48 object-cover" />
+                  ) : (
+                    <video src={previewUrl} className="w-full h-48 object-cover" controls />
+                  )}
+                </div>
+              )}
+            </div>
+            <Button onClick={handleUpload} className="w-full">
+              Add Memory
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
