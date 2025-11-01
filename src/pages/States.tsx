@@ -81,15 +81,6 @@ const States = () => {
           </Button>
           
           <h1 className="text-5xl font-bold text-center flex-1">States</h1>
-          
-          <div className="flex gap-2">
-            <Button variant="ghost" size="icon" className="border-2 border-orange-400 rounded-lg">
-              <span className="text-orange-400">⊞</span>
-            </Button>
-            <Button variant="ghost" size="icon" className="border-2 border-orange-400 rounded-lg">
-              <span className="text-orange-400">⊡</span>
-            </Button>
-          </div>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
