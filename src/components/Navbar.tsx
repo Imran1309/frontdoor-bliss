@@ -25,10 +25,10 @@ const Navbar = () => {
           <div className="flex items-center gap-3 animate-slide-in">
             <img src={logo} alt="Dhana Tour Consultors Logo" className="h-16 w-auto" />
             <div className="flex flex-col">
-              <h1 className="font-allerta text-lg md:text-xl font-bold leading-tight" style={{ color: 'hsl(0 100% 50%)' }}>
+              <h1 className="font-allerta text-lg md:text-xl font-bold leading-tight logo-company">
                 Dhana Tours and Consultors
               </h1>
-              <p className="font-allerta text-sm md:text-base" style={{ color: 'hsl(270 100% 50%)' }}>
+              <p className="font-allerta text-sm md:text-base logo-tagline">
                 Since 2020
               </p>
             </div>

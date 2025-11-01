@@ -93,3 +93,13 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .logo-company {
+    color: hsl(var(--logo-company));
+  }
+
+  .logo-tagline {
+    color: hsl(var(--logo-tagline));
+  }
+}
