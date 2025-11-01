@@ -54,13 +54,13 @@ const States = () => {
     const row = Math.ceil(position / 4);
     const col = ((position - 1) % 4) + 1;
     
-    // Calculate the crop position based on grid layout (4 columns)
-    const xPercent = ((col - 1) * 25);
-    const yPercent = ((row - 1) * 25);
+    // Calculate the crop position based on grid layout (4 columns x 4 rows)
+    const xPercent = ((col - 1) / 3) * 100;
+    const yPercent = ((row - 1) / 3) * 100;
     
     return {
       backgroundImage: `url(${imageSet === 1 ? states1 : states2})`,
-      backgroundSize: '400%',
+      backgroundSize: '400% 400%',
       backgroundPosition: `${xPercent}% ${yPercent}%`
     };
   };
