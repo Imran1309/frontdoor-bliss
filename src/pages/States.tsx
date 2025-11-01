@@ -1,11 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+} from "@/components/ui/pagination";
 import states1 from "@/assets/states-1.png";
 import states2 from "@/assets/states-2.png";
 
 const States = () => {
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
 
   const statesData = [
     { name: "Tamil Nadu", imageSet: 1, position: 1 },
@@ -57,6 +65,8 @@ const States = () => {
     };
   };
 
+  const currentStates = statesData.filter(state => state.imageSet === currentPage);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-pink-400 via-purple-400 to-cyan-400 p-6">
       <div className="max-w-7xl mx-auto">
@@ -82,8 +92,8 @@ const States = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {statesData.map((state, index) => (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          {currentStates.map((state, index) => (
             <div
               key={index}
               className="flex flex-col items-center cursor-pointer transform transition-transform hover:scale-105"
@@ -98,6 +108,29 @@ const States = () => {
             </div>
           ))}
         </div>
+
+        <Pagination className="mt-8">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationLink 
+                onClick={() => setCurrentPage(1)}
+                isActive={currentPage === 1}
+                className="cursor-pointer"
+              >
+                1
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink 
+                onClick={() => setCurrentPage(2)}
+                isActive={currentPage === 2}
+                className="cursor-pointer"
+              >
+                2
+              </PaginationLink>
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </div>
   );
