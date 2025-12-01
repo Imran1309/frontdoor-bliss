@@ -1,45 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { Menu, LogIn, LogOut } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Menu } from "lucide-react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { manualSupabaseClient as supabase } from "@/integrations/supabase/manualClient";
-import { useToast } from "@/hooks/use-toast";
-import type { User } from "@supabase/supabase-js";
 import logo from "@/assets/company-logo.png";
 
 const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
-  const { toast } = useToast();
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const handleLogout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    } else {
-      toast({
-        title: "Logged out",
-        description: "You have been successfully logged out.",
-      });
-    }
-  };
 
   const navItems = [
     { name: "Home", href: "#" },
@@ -93,27 +60,6 @@ const Navbar = () => {
             <Button variant="hero" size="lg" className="animate-fade-in" onClick={() => navigate("/booking")}>
               Book
             </Button>
-            {user ? (
-              <Button
-                variant="outline"
-                size="lg"
-                className="animate-fade-in"
-                onClick={handleLogout}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                size="lg"
-                className="animate-fade-in"
-                onClick={() => navigate("/auth")}
-              >
-                <LogIn className="mr-2 h-4 w-4" />
-                Login
-              </Button>
-            )}
           </div>
 
           {/* Mobile menu button */}
@@ -158,33 +104,6 @@ const Navbar = () => {
             <Button variant="hero" size="lg" className="w-full mt-4" onClick={() => navigate("/booking")}>
               Book
             </Button>
-            {user ? (
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full mt-2"
-                onClick={() => {
-                  handleLogout();
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <LogOut className="mr-2 h-4 w-4" />
-                Logout
-              </Button>
-            ) : (
-              <Button
-                variant="outline"
-                size="lg"
-                className="w-full mt-2"
-                onClick={() => {
-                  navigate("/auth");
-                  setMobileMenuOpen(false);
-                }}
-              >
-                <LogIn className="mr-2 h-4 w-4" />
-                Login
-              </Button>
-            )}
           </div>
         )}
       </div>
