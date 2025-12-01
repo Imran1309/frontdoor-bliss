@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, ArrowLeft } from "lucide-react";
+import { CalendarIcon, ArrowLeft, Clock } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
@@ -41,6 +41,27 @@ const Booking = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [timeRemaining, setTimeRemaining] = useState(120); // 2 minutes in seconds
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -95,6 +116,16 @@ const Booking = () => {
           </Button>
 
           <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-xl p-8">
+            <div className={cn(
+              "flex items-center justify-center gap-2 mb-6 p-4 rounded-lg transition-colors",
+              timeRemaining <= 30 ? "bg-red-100 text-red-700" : "bg-blue-100 text-blue-700"
+            )}>
+              <Clock className="h-5 w-5" />
+              <span className="text-lg font-semibold">
+                Time remaining: {formatTime(timeRemaining)}
+              </span>
+            </div>
+            
             <h1 className="text-4xl font-bold text-center mb-2">Book Your Trip</h1>
             <p className="text-center text-muted-foreground mb-8">
               Fill in the details below and we'll get back to you shortly
