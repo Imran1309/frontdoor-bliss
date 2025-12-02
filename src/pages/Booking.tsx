@@ -41,7 +41,7 @@ const Booking = () => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [timeRemaining, setTimeRemaining] = useState(120); // 2 minutes in seconds
+  const [timeRemaining, setTimeRemaining] = useState(60); // 1 minute in seconds
 
   useEffect(() => {
     const timer = setInterval(() => {
