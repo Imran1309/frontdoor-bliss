@@ -17,13 +17,13 @@ const Footer = () => {
               Creating unforgettable travel experiences across India since 2020.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="text-primary-foreground hover:text-accent transition-colors">
+              <a href="#" aria-label="Facebook" title="Facebook" className="text-primary-foreground hover:text-accent transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
-              <a href="#" className="text-primary-foreground hover:text-accent transition-colors">
+              <a href="#" aria-label="Instagram" title="Instagram" className="text-primary-foreground hover:text-accent transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="text-primary-foreground hover:text-accent transition-colors">
+              <a href="#" aria-label="Twitter" title="Twitter" className="text-primary-foreground hover:text-accent transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
             </div>
@@ -39,7 +39,7 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="#packages" className="text-primary-foreground/80 hover:text-accent transition-colors">
+               <a href="#packages" className="text-primary-foreground/80 hover:text-accent transition-colors">
                   Packages
                 </a>
               </li>
